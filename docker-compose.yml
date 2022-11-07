@@ -1,0 +1,49 @@
+version: "3.4"
+x-restart-policy: &restart_policy
+  restart: unless-stopped
+services:
+  database:
+    <<: *restart_policy
+    image: "postgres:latest"
+    environment:
+      POSTGRES_DB: db
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - "fastapi-db:/var/lib/postgresql/data"
+    networks:
+      - internal
+  redis:
+    <<: *restart_policy
+    image: "redis:latest"
+    ports:
+      - "6379:6379"
+    volumes:
+      - "fastapi-redis:/data"
+    networks:
+      - internal
+  web:
+    <<: *restart_policy
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - database
+      - redis
+    ports:
+      - "80:8000"    
+    volumes:
+      - ./src:/src
+    networks:
+      - internal
+    
+volumes:
+  fastapi-db:
+    external: true
+  fastapi-redis:
+    external: true
+networks:
+  internal:
+    driver: bridge

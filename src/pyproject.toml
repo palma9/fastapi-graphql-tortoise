@@ -1,0 +1,33 @@
+[tool.aerich]
+tortoise_orm = "app.core.db.TORTOISE_ORM"
+location = "./migrations"
+src_folder = "."
+
+[tool.poetry]
+name = "app"
+version = "0.1.0"
+description = "FastApi Strawberry Example"
+authors = ["Jesus Palma <jpalmalop@gmail.com>"]
+
+[tool.poetry.dependencies]
+python = "~3.11.0"
+aerich = "~0.7.1"
+asyncpg = "~0.27.0"
+broadcaster = "^0.2.0"
+cryptography = "~38.0.3"
+fastapi = "~0.86.0"
+passlib = {extras = ["bcrypt"], version = "~1.7.4"}
+pydantic = {extras = ["email"], version = "~1.10.2"}
+pyJWT = "~2.6.0"
+redis = "^4.3.4"
+requests = "~2.28.1"
+strawberry-graphql = {extras = ["fastapi"], version = "~0.139.0"}
+tortoise-orm = "~0.19.2"
+uvicorn = {extras = ["standard"], version = "~0.19.0"}
+asyncio-redis = "^0.16.0"
+
+[tool.poetry.group.dev.dependencies]
+flake8 = "^5.0.4"
+pre-commit = "^2.20.0"
+pytest = "~7.2.0"
+python-dotenv = "~0.21.0"
